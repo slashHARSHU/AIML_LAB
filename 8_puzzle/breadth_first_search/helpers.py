@@ -1,5 +1,7 @@
+import sys
 import numpy as np
 from datetime import datetime
+
 
 # get the elements for the start state from the user
 # =======================================================================
@@ -266,5 +268,36 @@ def move_empty_tile(temp_state):
 
     return new_possibilities
 
-# check if new states are matching with the previous removed states
+# calculate heuristic value for the currenty state comparin with the
+# end state using the method - number of misplaced tiles
 # =======================================================================
+
+
+def heuristic(current_state, end_state):
+    counter = 0
+    for i in range(3):
+        for j in range(3):
+            if not end_state[i, j] == current_state[i, j]:
+                counter += 1
+
+    return counter
+
+
+def heuristic_vector(new_states, end_state):
+    temp_vector = []
+    for state in new_states:
+        temp_vector.append(int(heuristic(state, end_state)))
+
+    return np.array(temp_vector)
+
+
+def stop_function(heuristic_vector):
+    if np.all(heuristic_vector == heuristic_vector[0]):
+        print("Heuristics values for all nodes are same. Program ends here.")
+        sys.exit()
+
+
+def get_current_state_from_sorted_data(heuristic_values, new_states):
+    sorted_indices = np.argsort(heuristic_values)
+    sorted_states = new_states[sorted_indices]
+    return sorted_states[0]
