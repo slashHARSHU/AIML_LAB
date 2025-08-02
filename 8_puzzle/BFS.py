@@ -1,5 +1,18 @@
+# ========================================================================
+# BFS.py
+# This file implements the Breadth-First Search (BFS) algorithm to solve
+# the 8-puzzle problem. It uses helper functions from the helpers module
+# to manage the puzzle states and perform necessary operations.
+#
+# Author: Harshad Gaikwad
+# Affiliation: COEP Technical University, Pune
+#
+# NOTE: This code is distributed strictly for educational purposes.
+# It is not intended for commercial use or distribution.
+# ========================================================================
 import sys
 import helpers as hlp
+from class_move_tile import MoveTile as MT
 
 hlp.enter_date_and_time()
 start_state = hlp.get_puzzle_start()
@@ -24,7 +37,7 @@ current_state = start_state.copy()
 while not hlp.np.array_equal(current_state, end_state):
 
     # get the new nodes for current state
-    new_states = hlp.move_empty_tile(current_state)
+    new_states = MT.move_empty_tile(current_state)
 
     # remove any state if it is similar to the removed states
     count_list = []
